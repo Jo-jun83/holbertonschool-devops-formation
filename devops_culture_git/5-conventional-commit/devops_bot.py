@@ -2,8 +2,12 @@
 """A tiny DevOps maintenance bot."""
 
 
+def validate_energy(energy):
+    return max(0, min(100, energy))
+
+
 def bot_status(name, energy):
-    energy = max(0, min(100, energy))
+    energy = validate_energy(energy)
     return f"{name} is online with {energy}% energy"
 
 
