@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Compose Stack</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 700px;
+            margin: 80px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ma première stack Docker Compose</h1>
+
+    <p>
+        Cette page communique avec une API lancée dans un autre conteneur.
+    </p>
+
+    <button onclick="callApi()">Appeler l'API</button>
+
+    <p id="result"></p>
+
+    <script>
+        async function callApi() {
+            const result = document.getElementById("result");
+
+            try {
+                const response = await fetch("http://localhost:5000/");
+                const data = await response.json();
+
+                result.textContent = data.message;
+            } catch (error) {
+                result.textContent = "Erreur lors de la connexion à l'API";
+            }
+        }
+    </script>
+
+</body>
+</html>

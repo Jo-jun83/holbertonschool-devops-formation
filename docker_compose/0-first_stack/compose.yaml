@@ -1,0 +1,36 @@
+services:
+  frontend: 
+    image: nginx:alpine
+    depends_on:
+      - api
+    ports:
+      - "8081:80"
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html
+
+  api:
+    build: ./
+    depends_on:
+      db:
+        condition: service_healthy
+    ports: 
+      - "5000:5000"
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: jo
+      POSTGRES_PASSWORD: azerty
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jo -d test"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    
